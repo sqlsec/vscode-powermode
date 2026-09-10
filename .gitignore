@@ -1,0 +1,19 @@
+# 依赖
+node_modules/
+
+# 编译产物
+out/
+
+# 打包产物
+*.vsix
+
+# 编辑器 / 系统
+.vscode/*
+!.vscode/launch.json
+!.vscode/tasks.json
+.DS_Store
+Thumbs.db
+
+# 日志
+*.log
+npm-debug.log*

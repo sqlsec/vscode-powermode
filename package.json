@@ -1,0 +1,158 @@
+{
+  "name": "vscode-powermode",
+  "displayName": "Power Mode 打字特效",
+  "description": "打字时在光标处迸发粒子 / 烟花特效，颜色跟随代码语法高亮颜色（代码什么颜色，特效就是什么颜色）",
+  "version": "0.1.0",
+  "publisher": "sqlsec",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sqlsec/vscode-powermode"
+  },
+  "icon": "logo.png",
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "power mode",
+    "particles",
+    "fireworks",
+    "打字特效",
+    "烟花"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "powermode.toggle",
+        "title": "Power Mode: 开启 / 关闭"
+      },
+      {
+        "command": "powermode.enable",
+        "title": "Power Mode: 开启"
+      },
+      {
+        "command": "powermode.disable",
+        "title": "Power Mode: 关闭"
+      },
+      {
+        "command": "powermode.selectPreset",
+        "title": "Power Mode: 选择特效风格"
+      },
+      {
+        "command": "powermode.selectColor",
+        "title": "Power Mode: 选择颜色"
+      },
+      {
+        "command": "powermode.showTokenColor",
+        "title": "Power Mode: 查看当前语法的取色结果"
+      }
+    ],
+    "configuration": {
+      "title": "Power Mode 打字特效",
+      "properties": {
+        "powermode.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "是否开启打字特效"
+        },
+        "powermode.preset": {
+          "type": "string",
+          "enum": [
+            "particles",
+            "fireworks",
+            "flames",
+            "magic",
+            "explosion"
+          ],
+          "enumDescriptions": [
+            "经典：少量粒子向上飘散（POWERMODE 原版手感）",
+            "烟花：大量粒子向四周炸开",
+            "火焰：向上喷射的火焰粒子",
+            "魔法：细腻的星尘，颜色更随机",
+            "爆裂：超大量粒子的强烈爆炸"
+          ],
+          "default": "particles",
+          "description": "特效风格"
+        },
+        "powermode.colorMode": {
+          "type": "string",
+          "enum": [
+            "code",
+            "rainbow",
+            "fixed"
+          ],
+          "enumDescriptions": [
+            "跟随代码颜色：按当前主题里该处语法高亮的颜色取色（推荐）",
+            "彩虹：完全随机颜色",
+            "固定：使用 powermode.color 指定的颜色"
+          ],
+          "default": "code",
+          "description": "特效颜色来源"
+        },
+        "powermode.color": {
+          "type": "string",
+          "format": "color-hex",
+          "default": "#ffcc00",
+          "description": "powermode.colorMode = fixed 时使用的颜色；推荐用命令「Power Mode: 选择颜色」挑选色板，也可在 settings.json 里点色块取色"
+        },
+        "powermode.fps": {
+          "type": "number",
+          "default": 30,
+          "minimum": 10,
+          "maximum": 120,
+          "description": "特效帧率，越大越顺滑但越耗性能"
+        },
+        "powermode.combo.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "开启连击（连续快速输入时粒子变多）"
+        },
+        "powermode.combo.maxMultiplier": {
+          "type": "number",
+          "default": 2.5,
+          "description": "连击带来的粒子数量倍率上限"
+        },
+        "powermode.shake": {
+          "type": "boolean",
+          "default": false,
+          "description": "抖动：打字时当前行文字轻微抖动（模仿原版 POWERMODE 的 shake，可能引起排版抖动，默认关闭）"
+        },
+        "powermode.shakeIntensity": {
+          "type": "number",
+          "default": 0.6,
+          "description": "抖动强度(px)"
+        },
+        "powermode.excludeLanguages": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "description": "不启用特效的 languageId 列表，例如 [\"markdown\", \"plaintext\"]"
+        },
+        "powermode.showStatusBar": {
+          "type": "boolean",
+          "default": true,
+          "description": "在状态栏显示开关图标（悬停可查看当前风格 / 配色 / 取色）"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@types/node": "^18.0.0",
+    "@types/vscode": "^1.75.0",
+    "typescript": "^5.4.0"
+  }
+}
